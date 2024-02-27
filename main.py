@@ -27,7 +27,7 @@ def after_request(response):
     return response
  
 @app.route("/")
-def index():
+def calor():
         return render_template("index.html")
    
 @app.route("/alumnos")
@@ -130,7 +130,7 @@ def index():
                        email=create_form.email.data)
           db.session.add(alum)
           db.session.commit()
-          return render_template('index.html', form=create_form)
+     return render_template('index.html', form=create_form)
 
 if __name__== "__main__":
     csrf.init_app(app)
