@@ -5,6 +5,7 @@ from wtforms import Form, StringField, IntegerField, validators
 
 
 class UserForm(Form):
+    
     nombre = StringField('nombre', [
         validators.DataRequired(message='El campo es requerido'),
         validators.Length(min=4, max=10, message='Ingresa un nombre válido')
@@ -26,3 +27,21 @@ class UserForm(Form):
         validators.NumberRange(min=1, max=120, message='Ingresa una edad válida')
     ])
 
+class UserForm2(Form):
+    id=IntegerField('id',
+                    [validators.number_range(min=1, max=20, message='valor no valido')])
+    
+    nombre = StringField('nombre', [
+        validators.DataRequired(message='El campo es requerido'),
+        validators.Length(min=4, max=10, message='Ingresa un nombre válido')
+    ])
+
+    apaterno = StringField('apaterno', [
+        validators.DataRequired(message='El campo es requerido'),
+        validators.Length(min=4, max=30, message='Ingresa un apellido válido')
+    ])
+   
+    email = StringField('email', [
+        validators.DataRequired(message='El campo es requerido'),
+        validators.Email(message='Ingresa un email válido')
+    ])

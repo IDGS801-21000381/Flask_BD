@@ -6,8 +6,11 @@ from flask import g
 import forms
 from wtforms import validators
  
+from models import db
+from models import Alumnos
+
 app=Flask(__name__)
-app.config.from_object(DeprecationWarning)
+app.config.from_object(DevelopmentConfig)
 csrf=CSRFProtect()
  
 @app.errorhandler(404)
@@ -116,6 +119,24 @@ def resul():
         num2=request.form.get("n2")
         return"La multiplicacion de {} x {} = {}".format(num1,num2,str(int(num1)*int(num2)))
    
+
+
+@app.route('/index',methods=['GET', 'POST'])
+def index():
+     create_form=forms.UserForm2(request.form)
+     if request.method=='POST':
+          alum=Alumnos(nombre=create_form.nombre.data,
+                       apaterno=create_form.apaterno.data,
+                       email=create_form.email.data)
+          db.session.add(alum)
+          db.session.commit()
+          return render_template('index.html', form=create_form)
+
 if __name__== "__main__":
     csrf.init_app(app)
+    db.init_app(app)
+    
+
+    with app.app_context():
+         db.create_all()
     app.run()
